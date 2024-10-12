@@ -1,90 +1,131 @@
 
-# Video Management Task
+# Video Management Setup Guide
 
-Follow these steps to get the project up and running on your local machine.
+Follow these steps to set up and run the video management project either locally or with Docker.
 
-1. Clone the repository
+---
 
-```https://github.com/Mahammadhusain/video_management.git```
+## 1. Clone the Repository
 
-2. Install dependencies
+Start by cloning the repository to your local machine:
+```bash
+git clone https://github.com/Mahammadhusain/video_management.git
+```
 
-If you are running the app locally without Docker, you can install the required Python packages using:
+---
 
-- Create virtual env and activate it
-- Then install requirements
+## 2. Install Dependencies
 
-```pip install -r requirements.txt```
+### Running Locally (without Docker):
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-3. Run the Application using Docker
+3. Run the FastAPI server:
+   ```bash
+   uvicorn api.main:app --reload
+   ```
 
-To run the application with Docker, use the following command:
+4. Access the API documentation:
+   ```bash
+   http://127.0.0.1:8000/docs
+   ```
 
-```docker-compose up --build```
+---
 
-4. Access the Application
+## 3. Running the Application with Docker
 
-Once the containers are running, you can access the FastAPI app at:
+To run the application using Docker:
 
-```http://localhost:8000```
+1. Build and start the Docker containers:
+   ```bash
+   docker-compose up --build
+   ```
 
-5. Testing endpoints:
+2. Access the FastAPI app at:
+   ```bash
+   http://localhost:8000/docs
+   ```
 
-    Here i am used redis for catching and not setup .env file so....
+---
 
-    If you are test with locally windows machine then change in app file ```redis_service.py```
+## 4. Redis Setup
 
-    ```redis_client = redis.Redis(host='localhost', port=6379, db=0)```
-
-    and make sure redis intalled in your windows local machine
-    You can download form here...
-    https://github.com/tporadowski/redis/releases
-
-    downlod ```Redis-x64-5.0.14.1.msi``` and install it.
-
-    If you are test with docker image or linux os then change in app file ```redis_service.py```
-    
-    ```redis_client = redis.Redis(host='redis', port=6379, db=0)```
-    
-
-    Api Doc Urls:
-    ```http://localhost:8000/docs```
-    ```http://localhost:8000/redoc```
-
-    Testing credentials:
-    
-    username - ```admin```
-
-    password -  ```admin```
-
-    
-    Auth Endpoints:
-    - generate token ```http://localhost:8000/token/``` - POST
-    - signin ```http://localhost:8000/signin/``` - POST
-    - signup ```http://localhost:8000/signup/``` - POST
-
-    Video Endpoints:
-    - upload video ```http://localhost:8000/upload/``` - POST (login required & is_admin=True)
-    - search video ```http://localhost:8000/search/?name=file_example&size=177340``` - GET (login required & is_admin=True)
-    - block video ```http://localhost:8000/block/28/``` - POST
-    - unblock video ```http://localhost:8000/unblock/28/``` - POST
-    - download video ```http://localhost:8000/download/28/``` - GET
-
-
-6. Unit Testing commands:
-
-    Note - Make sure you are in project directory location at project root
+### Local (Windows):
+1. Install Redis on Windows from [Redis-x64-5.0.14.1.msi](https://github.com/tporadowski/redis/releases).
    
-    i.e ```PS C:\Users\hp\Desktop\video_management\video_management>```
+2. Modify the `redis_service.py` file to use the local Redis instance:
+   ```python
+   redis_client = redis.Redis(host='localhost', port=6379, db=0)
+   ```
 
-    Auth related
-    - run command ```pytest tests\tests_user_signup.py```
-    - run command ```pytest tests\tests_user_signin.py```
+### Docker or Linux:
+1. Ensure Redis is running inside Docker.
+2. Modify the `redis_service.py` file to point to the Docker Redis service:
+   ```python
+   redis_client = redis.Redis(host='redis', port=6379, db=0)
+   ```
 
-    Video Management related
-    - run command ```pytest tests\test_videos.py```
+---
+
+## 5. API Documentation
+
+Access the API documentation:
+
+- **Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Redoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+## 6. Testing Endpoints
+
+### Test Credentials:
+- **Username:** `admin`
+- **Password:** `admin`
+
+### Authentication Endpoints:
+- Generate token (POST): `http://localhost:8000/token/`
+- Sign in (POST): `http://localhost:8000/signin/`
+- Sign up (POST): `http://localhost:8000/signup/`
+
+### Video Management Endpoints:
+- **Upload Video** (POST): `http://localhost:8000/upload/` (Admin access required)
+- **Search Video** (GET): `http://localhost:8000/search/?name=file_example&size=177340`
+- **Block Video** (POST): `http://localhost:8000/block/{video_id}/`
+- **Unblock Video** (POST): `http://localhost:8000/unblock/{video_id}/`
+- **Download Video** (GET): `http://localhost:8000/download/{video_id}/`
+
+---
+
+## 7. Running Unit Tests
+
+Make sure you are in the project root directory before running tests.
+
+### Authentication Tests:
+- Run signup tests:
+   ```bash
+   pytest tests/tests_user_signup.py
+   ```
+
+- Run signin tests:
+   ```bash
+   pytest tests/tests_user_signin.py
+   ```
+
+### Video Management Tests:
+- Run video-related tests:
+   ```bash
+   pytest tests/test_videos.py
+   ```
+
+---
 
 
-
-
+###  Thank you 
