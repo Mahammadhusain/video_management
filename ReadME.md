@@ -74,7 +74,8 @@ Once the containers are running, you can access the FastAPI app at:
 
 6. Unit Testing commands:
 
-    Note - Make sure project directory location at project root
+    Note - Make sure you are in project directory location at project root
+   
     i.e ```PS C:\Users\hp\Desktop\video_management\video_management>```
 
     Auth related
