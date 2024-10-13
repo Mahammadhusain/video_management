@@ -97,7 +97,7 @@ Access the API documentation:
 
 ### Video Management Endpoints:
 - **Upload Video** (POST): `http://localhost:8000/upload/` (Admin access required)
-- **Search Video** (GET): `http://localhost:8000/search/?name=file_example&size=177340`
+- **Search Video** (GET): `http://localhost:8000/search/?name=file_example&size=177340` (Admin access required)
 - **Block Video** (POST): `http://localhost:8000/block/{video_id}/`
 - **Unblock Video** (POST): `http://localhost:8000/unblock/{video_id}/`
 - **Download Video** (GET): `http://localhost:8000/download/{video_id}/`
